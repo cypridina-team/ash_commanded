@@ -1,11 +1,11 @@
 defmodule AshCommanded.Commanded.Sections.CommandsSection do
   @moduledoc """
   Defines the schema and entities for the `commands` section of the Commanded DSL.
-  
+
   Commands define the actions that can be performed on a resource and correspond to commands
   in the Commanded CQRS/ES library.
   """
-  
+
   @transform_params_entity %Spark.Dsl.Entity{
     name: :transform_params,
     target: AshCommanded.Commanded.ParameterTransformer,
@@ -53,7 +53,7 @@ defmodule AshCommanded.Commanded.Sections.CommandsSection do
     auto_set_fields: [],
     docs: ""
   }
-  
+
   @validate_params_entity %Spark.Dsl.Entity{
     name: :validate_params,
     target: AshCommanded.Commanded.ParameterValidator,
@@ -81,7 +81,7 @@ defmodule AshCommanded.Commanded.Sections.CommandsSection do
     auto_set_fields: [],
     docs: ""
   }
-  
+
   @transaction_entity %Spark.Dsl.Entity{
     name: :transaction,
     target: AshCommanded.Commanded.Transaction,
@@ -122,7 +122,7 @@ defmodule AshCommanded.Commanded.Sections.CommandsSection do
     auto_set_fields: [],
     docs: ""
   }
-  
+
   @command_entity %Spark.Dsl.Entity{
     name: :command,
     target: AshCommanded.Commanded.Command,
@@ -221,9 +221,13 @@ defmodule AshCommanded.Commanded.Sections.CommandsSection do
         doc: "Static context values to include in every action execution"
       ]
     ],
-    imports: [@transform_params_entity, @validate_params_entity, @transaction_entity]
+    entities: [
+      transform_params: [@transform_params_entity],
+      validate_params: [@validate_params_entity],
+      transaction: [@transaction_entity]
+    ]
   }
-  
+
   def schema do
     [
       commands: [
@@ -251,8 +255,8 @@ defmodule AshCommanded.Commanded.Sections.CommandsSection do
       ]
     ]
   end
-  
+
   def entities do
-    [@command_entity, @transform_params_entity, @validate_params_entity, @transaction_entity]
+    [@command_entity]
   end
 end
